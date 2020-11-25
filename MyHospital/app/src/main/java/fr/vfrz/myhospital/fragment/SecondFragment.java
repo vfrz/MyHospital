@@ -1,4 +1,4 @@
-package fr.vfrz.myhospital.fragments;
+package fr.vfrz.myhospital.fragment;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
