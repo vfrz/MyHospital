@@ -10,7 +10,6 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -22,7 +21,7 @@ import fr.vfrz.myhospital.adapter.HospitalServiceListAdapter;
 import fr.vfrz.myhospital.model.HospitalServiceWithBeds;
 import fr.vfrz.myhospital.viewmodel.HospitalServiceViewModel;
 
-public class FirstFragment extends Fragment {
+public class ServicesFragment extends Fragment {
 
     private HospitalServiceViewModel serviceViewModel;
     private HospitalServiceListAdapter serviceListAdapter;
@@ -31,7 +30,7 @@ public class FirstFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
 
-        View root = inflater.inflate(R.layout.fragment_first, container, false);
+        View root = inflater.inflate(R.layout.services_fragment, container, false);
 
         RecyclerView recyclerView = root.findViewById(R.id.recyclerview);
         serviceListAdapter = new HospitalServiceListAdapter();
@@ -58,7 +57,7 @@ public class FirstFragment extends Fragment {
         /*view.findViewById(R.id.button_first).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                NavHostFragment.findNavController(FirstFragment.this)
+                NavHostFragment.findNavController(ServicesFragment.this)
                         .navigate(R.id.action_FirstFragment_to_SecondFragment);
             }
         });*/
