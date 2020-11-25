@@ -13,6 +13,8 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import fr.vfrz.myhospital.database.HospitalDatabase;
+
 public class MainActivity extends AppCompatActivity {
 
     @Override
@@ -48,6 +50,8 @@ public class MainActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            HospitalDatabase.getDatabase(getApplicationContext())
+                    .populate();
             return true;
         }
 

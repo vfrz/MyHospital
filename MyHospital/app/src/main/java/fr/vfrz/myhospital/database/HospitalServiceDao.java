@@ -14,7 +14,7 @@ import fr.vfrz.myhospital.model.HospitalService;
 import fr.vfrz.myhospital.model.HospitalServiceWithBeds;
 
 @Dao
-public interface HospitalServiceDao {
+public interface HospitalServiceDao extends HospitalBaseDao<HospitalService> {
 
     @Transaction
     @Query("SELECT * FROM services")

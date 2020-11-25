@@ -6,6 +6,10 @@ import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
+import java.util.GregorianCalendar;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
+
 import fr.vfrz.myhospital.model.HospitalBed;
 import fr.vfrz.myhospital.model.HospitalPatient;
 import fr.vfrz.myhospital.model.HospitalService;
@@ -36,5 +40,17 @@ public abstract class HospitalDatabase extends RoomDatabase {
             }
         }
         return instance;
+    }
+
+    // Populate for testing purposes
+    private void populateServices() {
+        serviceDao().insert(new HospitalService("Oncologie"));
+        serviceDao().insert(new HospitalService("Radiologie programmée"));
+        serviceDao().insert(new HospitalService("Radiologie urgence"));
+    }
+
+    public void populate() {
+        Executor executor = Executors.newSingleThreadExecutor();
+        executor.execute(this::populateServices);
     }
 }
