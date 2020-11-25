@@ -16,7 +16,7 @@ import fr.vfrz.myhospital.model.HospitalStaff;
         HospitalPatient.class,
         HospitalService.class,
         HospitalStaff.class
-})
+}, exportSchema = false)
 public abstract class HospitalDatabase extends RoomDatabase {
 
     public abstract HospitalServiceDao serviceDao();

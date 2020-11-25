@@ -6,6 +6,7 @@ import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
+import androidx.room.Transaction;
 
 import java.util.List;
 
@@ -15,6 +16,7 @@ import fr.vfrz.myhospital.model.HospitalServiceWithBeds;
 @Dao
 public interface HospitalServiceDao {
 
+    @Transaction
     @Query("SELECT * FROM services")
     LiveData<List<HospitalServiceWithBeds>> getAllWithBeds();
 
