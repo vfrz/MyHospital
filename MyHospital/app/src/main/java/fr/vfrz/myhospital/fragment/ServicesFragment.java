@@ -32,8 +32,8 @@ public class ServicesFragment extends Fragment {
 
         View root = inflater.inflate(R.layout.services_fragment, container, false);
 
-        RecyclerView recyclerView = root.findViewById(R.id.recyclerview);
-        serviceListAdapter = new HospitalServiceListAdapter();
+        RecyclerView recyclerView = root.findViewById(R.id.services_list);
+        serviceListAdapter = new HospitalServiceListAdapter(this);
         recyclerView.setAdapter(serviceListAdapter);
         DividerItemDecoration divider = new DividerItemDecoration(recyclerView.getContext(), DividerItemDecoration.VERTICAL);
         recyclerView.addItemDecoration(divider);

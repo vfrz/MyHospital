@@ -21,7 +21,7 @@ public interface HospitalServiceDao extends HospitalBaseDao<HospitalService> {
     LiveData<List<HospitalServiceWithBeds>> getAllWithBeds();
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insert(HospitalService service);
+    long insert(HospitalService service);
 
     @Delete
     void delete(HospitalService service);

@@ -27,8 +27,8 @@ public class HospitalServiceViewModel extends AndroidViewModel {
         return servicesWithBeds;
     }
 
-    public void insert(HospitalService service) {
-        repository.insert(service);
+    public Long insert(HospitalService service) {
+        return repository.insert(service);
     }
 
     public void delete(HospitalService service) {

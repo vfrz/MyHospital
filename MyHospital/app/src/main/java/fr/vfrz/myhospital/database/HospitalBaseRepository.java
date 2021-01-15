@@ -7,7 +7,7 @@ import fr.vfrz.myhospital.model.HospitalModel;
 public abstract class HospitalBaseRepository {
 
     protected static class insertAsyncTask<TModel extends HospitalModel, TDao extends HospitalBaseDao<TModel>>
-            extends AsyncTask<TModel, Void, Void> {
+            extends AsyncTask<TModel, Void, Long> {
 
         private final TDao dao;
 
@@ -16,9 +16,8 @@ public abstract class HospitalBaseRepository {
         }
 
         @Override
-        protected Void doInBackground(final TModel... params) {
-            dao.insert(params[0]);
-            return null;
+        protected Long doInBackground(final TModel... params) {
+            return dao.insert(params[0]);
         }
     }
 

@@ -4,7 +4,7 @@ import fr.vfrz.myhospital.model.HospitalModel;
 
 public interface HospitalBaseDao<T extends HospitalModel> {
 
-    void insert(T model);
+    long insert(T model);
 
     void delete(T model);
 }

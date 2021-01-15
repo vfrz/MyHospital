@@ -11,6 +11,7 @@ import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
 import fr.vfrz.myhospital.model.HospitalBed;
+import fr.vfrz.myhospital.model.HospitalBedState;
 import fr.vfrz.myhospital.model.HospitalPatient;
 import fr.vfrz.myhospital.model.HospitalService;
 import fr.vfrz.myhospital.model.HospitalStaff;
@@ -24,6 +25,8 @@ import fr.vfrz.myhospital.model.HospitalStaff;
 public abstract class HospitalDatabase extends RoomDatabase {
 
     public abstract HospitalServiceDao serviceDao();
+
+    public abstract HospitalBedDao bedDao();
 
     // Singleton access
     private static HospitalDatabase instance;
@@ -43,14 +46,30 @@ public abstract class HospitalDatabase extends RoomDatabase {
     }
 
     // Populate for testing purposes
-    private void populateServices() {
-        serviceDao().insert(new HospitalService("Oncologie"));
-        serviceDao().insert(new HospitalService("Radiologie programmée"));
-        serviceDao().insert(new HospitalService("Radiologie urgence"));
+    private void populateDatabase() {
+        long oncologie = serviceDao().insert(new HospitalService("Oncologie"));
+        insertBeds(7, oncologie, HospitalBedState.Free);
+
+        long programmee = serviceDao().insert(new HospitalService("Radiologie programmée"));
+        insertBeds(12, programmee, HospitalBedState.Free);
+
+        long urgence = serviceDao().insert(new HospitalService("Radiologie urgence"));
+        insertBeds(4, urgence, HospitalBedState.Free);
+    }
+
+    private void insertBeds(int bedCount, long serviceId, HospitalBedState state) {
+        for (int i = 0; i < bedCount; i++) {
+            bedDao().insert(new HospitalBed(serviceId, state));
+        }
     }
 
     public void populate() {
         Executor executor = Executors.newSingleThreadExecutor();
-        executor.execute(this::populateServices);
+        executor.execute(this::populateDatabase);
+    }
+
+    public void clear() {
+        Executor executor = Executors.newSingleThreadExecutor();
+        executor.execute(() -> instance.clearAllTables());
     }
 }

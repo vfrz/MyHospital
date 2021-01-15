@@ -15,4 +15,8 @@ public class HospitalBed extends HospitalModel {
     public Long staffId;
     public Long patientId;
 
+    public HospitalBed(long serviceId, HospitalBedState state) {
+        this.serviceId = serviceId;
+        this.state = state;
+    }
 }

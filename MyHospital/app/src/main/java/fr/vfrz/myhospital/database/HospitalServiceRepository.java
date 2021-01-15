@@ -5,6 +5,7 @@ import android.app.Application;
 import androidx.lifecycle.LiveData;
 
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 import fr.vfrz.myhospital.model.HospitalService;
 import fr.vfrz.myhospital.model.HospitalServiceWithBeds;
@@ -24,8 +25,15 @@ public class HospitalServiceRepository extends HospitalBaseRepository {
         return servicesWithBeds;
     }
 
-    public void insert(HospitalService service) {
-        new insertAsyncTask<>(serviceDao).execute(service);
+    public Long insert(HospitalService service) {
+        try {
+            return new insertAsyncTask<>(serviceDao).execute(service).get();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     public void delete(HospitalService service) {

@@ -4,22 +4,32 @@ import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
 import androidx.databinding.DataBindingUtil;
+import androidx.fragment.app.Fragment;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
 import fr.vfrz.myhospital.R;
 import fr.vfrz.myhospital.databinding.ServicesItemBinding;
+import fr.vfrz.myhospital.fragment.ServicesFragment;
+import fr.vfrz.myhospital.fragment.ServicesFragmentDirections;
 import fr.vfrz.myhospital.model.HospitalServiceWithBeds;
 
 public class HospitalServiceListAdapter extends RecyclerView.Adapter<HospitalServiceListAdapter.HospitalServiceViewHolder> {
 
     private List<HospitalServiceWithBeds> servicesWithBeds;
 
+    private Fragment fragment;
+
+    public HospitalServiceListAdapter(Fragment fragment) {
+        this.fragment = fragment;
+    }
+
     @Override
     public HospitalServiceViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         ServicesItemBinding binding = DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()), R.layout.services_item, parent, false);
-        return new HospitalServiceViewHolder(binding);
+        return new HospitalServiceViewHolder(binding, fragment);
     }
 
     @Override
@@ -49,9 +59,27 @@ public class HospitalServiceListAdapter extends RecyclerView.Adapter<HospitalSer
 
         private ServicesItemBinding binding;
 
-        private HospitalServiceViewHolder(ServicesItemBinding binding) {
+        public HospitalServiceViewHolder(ServicesItemBinding binding, Fragment fragment) {
             super(binding.getRoot());
             this.binding = binding;
+
+            this.binding.getRoot().setOnClickListener(v -> {
+                int position = getLayoutPosition();
+                HospitalServiceWithBeds selectedService = servicesWithBeds.get(position);
+
+                ServicesFragmentDirections.ActionServicesFragmentToServiceFragment action
+                        = ServicesFragmentDirections.actionServicesFragmentToServiceFragment();
+                action.setServiceId(selectedService.service.id);
+                NavHostFragment.findNavController(fragment)
+                        .navigate(action);
+            });
+
+            /*this.binding.getRoot().setOnLongClickListener(v -> {
+                int position = getLayoutPosition();
+                Contact contact = contacts.get(position);
+                mViewModel.deleteContact(contact);
+                return true;
+            });*/
         }
     }
 
