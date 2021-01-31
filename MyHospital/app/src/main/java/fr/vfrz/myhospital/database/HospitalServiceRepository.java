@@ -25,6 +25,10 @@ public class HospitalServiceRepository extends HospitalBaseRepository {
         return servicesWithBeds;
     }
 
+    public HospitalServiceWithBeds getByIdWithBeds(long serviceId) {
+        return serviceDao.getByIdWithBeds(serviceId);
+    }
+
     public Long insert(HospitalService service) {
         try {
             return new insertAsyncTask<>(serviceDao).execute(service).get();

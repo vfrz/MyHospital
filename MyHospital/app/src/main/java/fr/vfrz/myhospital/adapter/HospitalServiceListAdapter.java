@@ -1,19 +1,19 @@
 package fr.vfrz.myhospital.adapter;
 
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
-import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
 import fr.vfrz.myhospital.R;
+import fr.vfrz.myhospital.ServiceActivity;
+import fr.vfrz.myhospital.database.HospitalServiceRepository;
 import fr.vfrz.myhospital.databinding.ServicesItemBinding;
-import fr.vfrz.myhospital.fragment.ServicesFragment;
-import fr.vfrz.myhospital.fragment.ServicesFragmentDirections;
 import fr.vfrz.myhospital.model.HospitalServiceWithBeds;
 
 public class HospitalServiceListAdapter extends RecyclerView.Adapter<HospitalServiceListAdapter.HospitalServiceViewHolder> {
@@ -38,7 +38,6 @@ public class HospitalServiceListAdapter extends RecyclerView.Adapter<HospitalSer
             HospitalServiceWithBeds current = servicesWithBeds.get(position);
             holder.binding.setService(current);
         } else {
-            // Covers the case of data not being ready yet.
             holder.binding.setService(null);
         }
     }
@@ -48,8 +47,6 @@ public class HospitalServiceListAdapter extends RecyclerView.Adapter<HospitalSer
         notifyDataSetChanged();
     }
 
-    // getItemCount() is called many times, and when it is first called,
-    // mWords has not been updated (means initially, it's null, and we can't return null).
     @Override
     public int getItemCount() {
         return servicesWithBeds != null ? servicesWithBeds.size() : 0;
@@ -66,20 +63,18 @@ public class HospitalServiceListAdapter extends RecyclerView.Adapter<HospitalSer
             this.binding.getRoot().setOnClickListener(v -> {
                 int position = getLayoutPosition();
                 HospitalServiceWithBeds selectedService = servicesWithBeds.get(position);
-
-                ServicesFragmentDirections.ActionServicesFragmentToServiceFragment action
-                        = ServicesFragmentDirections.actionServicesFragmentToServiceFragment();
-                action.setServiceId(selectedService.service.id);
-                NavHostFragment.findNavController(fragment)
-                        .navigate(action);
+                Intent intent = new Intent(fragment.getContext(), ServiceActivity.class);
+                intent.putExtra("serviceId", selectedService.service.id);
+                fragment.startActivity(intent);
             });
 
-            /*this.binding.getRoot().setOnLongClickListener(v -> {
+            this.binding.getRoot().setOnLongClickListener(v -> {
                 int position = getLayoutPosition();
-                Contact contact = contacts.get(position);
-                mViewModel.deleteContact(contact);
+                HospitalServiceWithBeds serviceWithBeds = servicesWithBeds.get(position);
+                HospitalServiceRepository serviceRepository = new HospitalServiceRepository(fragment.getActivity().getApplication());
+                serviceRepository.delete(serviceWithBeds.service);
                 return true;
-            });*/
+            });
         }
     }
 

@@ -9,19 +9,5 @@
         android:id="@+id/ServicesFragment"
         android:name="fr.vfrz.myhospital.fragment.ServicesFragment"
         android:label="@string/services_fragment_label"
-        tools:layout="@layout/services_fragment">
-        <action
-            android:id="@+id/action_ServicesFragment_to_ServiceFragment"
-            app:destination="@id/ServiceFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/ServiceFragment"
-        android:name="fr.vfrz.myhospital.fragment.ServiceFragment"
-        android:label="@string/second_fragment_label"
-        tools:layout="@layout/service_fragment">
-        <argument
-            android:name="serviceId"
-            app:argType="long"
-            android:defaultValue="-1L" />
-    </fragment>
+        tools:layout="@layout/services_fragment"/>
 </navigation>

@@ -20,6 +20,9 @@ public interface HospitalServiceDao extends HospitalBaseDao<HospitalService> {
     @Query("SELECT * FROM services")
     LiveData<List<HospitalServiceWithBeds>> getAllWithBeds();
 
+    @Query("SELECT * FROM services WHERE id = :serviceId")
+    HospitalServiceWithBeds getByIdWithBeds(long serviceId);
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     long insert(HospitalService service);
 
