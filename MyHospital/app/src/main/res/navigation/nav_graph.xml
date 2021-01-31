@@ -13,9 +13,6 @@
         <action
             android:id="@+id/action_ServicesFragment_to_ServiceFragment"
             app:destination="@id/ServiceFragment" />
-        <action
-            android:id="@+id/action_ServicesFragment_to_addServiceFragment"
-            app:destination="@id/addServiceFragment" />
     </fragment>
     <fragment
         android:id="@+id/ServiceFragment"
@@ -27,9 +24,4 @@
             app:argType="long"
             android:defaultValue="-1L" />
     </fragment>
-    <fragment
-        android:id="@+id/addServiceFragment"
-        android:name="fr.vfrz.myhospital.fragment.AddServiceFragment"
-        android:label="add_service_fragment"
-        tools:layout="@layout/add_service_fragment" />
 </navigation>

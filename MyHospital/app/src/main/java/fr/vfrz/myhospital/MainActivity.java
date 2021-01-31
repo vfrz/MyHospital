@@ -1,13 +1,12 @@
 package fr.vfrz.myhospital;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.fragment.app.Fragment;
-import androidx.navigation.fragment.NavHostFragment;
 
 import android.view.Menu;
 import android.view.MenuItem;
@@ -25,8 +24,8 @@ public class MainActivity extends AppCompatActivity {
 
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(view -> {
-            Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
-            NavHostFragment.findNavController(fragment).navigate(R.id.addServiceFragment);
+            Intent intent = new Intent(this, AddServiceActivity.class);
+            startActivity(intent);
         });
     }
 
